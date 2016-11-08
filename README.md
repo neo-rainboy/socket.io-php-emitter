@@ -1,11 +1,11 @@
 shakahl/socket.io-php-emitter
 =====================
 
-A PHP implementation of socket.io-emitter (0.1.0).
+A PHP implementation of node.js socket.io-emitter (0.1.0).
 
 ## Installation
 
-composer require shakahl/socket.io-emitter
+composer require shakahl/socket.io-php-emitter
 
 ## Usage
 
