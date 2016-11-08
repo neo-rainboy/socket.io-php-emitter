@@ -27,7 +27,7 @@ Possible flags
 * volatile
 * broadcast
 
-#### To use flags, just call it like in example bellow
+#### To use flags, just call it like in examples bellow
 ```php
 use Predis;
 use Shakahl\SocketIO;
@@ -37,6 +37,9 @@ $client = new Predis\Client();
 
 (new Emitter($client))
     ->broadcast->emit('broadcast-event', 'payload message');
+
+(new Emitter($client))
+    ->flag('broadcast')->emit('broadcast-event', 'payload message');
 ```
 
 ### Emit an object
@@ -48,6 +51,19 @@ use Shakahl\SocketIO;
 $client = new Predis\Client();
 
 (new Emitter($client))
+    ->emit('broadcast-event', ['param1' => 'value1', 'param2' => 'value2', ]);
+```
+
+### Emit an object in a rooms
+```php
+use Predis;
+use Shakahl\SocketIO;
+...
+
+$client = new Predis\Client();
+
+(new Emitter($client))
+    ->in(['room1', 'room2'])
     ->emit('broadcast-event', ['param1' => 'value1', 'param2' => 'value2', ]);
 ```
 

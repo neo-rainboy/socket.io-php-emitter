@@ -10,6 +10,7 @@ namespace Shakahl\SocketIO;
 use MessagePack\Packer;
 use Predis;
 use Shakahl\SocketIO\Constants\Emitter\Type;
+use Shakahl\SocketIO\Constants\Emitter\Flag;
 
 /**
  * Class Emitter
@@ -48,6 +49,11 @@ class Emitter
     /**
      * @var array
      */
+    protected $validFlags = [];
+
+    /**
+     * @var array
+     */
     protected $flags;
 
     /**
@@ -77,6 +83,12 @@ class Emitter
         $this->prefix = $prefix;
         $this->packer = new Packer();
         $this->reset();
+
+        $this->validFlags = [
+            Flag::JSON,
+            Flag::VOLATILE,
+            Flag::BROADCAST,
+        ];
     }
 
     /**
@@ -125,26 +137,43 @@ class Emitter
     }
 
     /**
-     * Set flags
+     * Set flags with magic method
      *
      * @param  int $flag
      * @return $this
      */
     public function __get($flag)
     {
+        return $this->flag();
+    }
+
+    /**
+     * Set flags
+     *
+     * @param  int $flag
+     * @return $this
+     */
+    public function flag($flag) {
+        
+        if (!array_key_exists($flag, $this->validFlags)) {
+            throw new \InvalidArgumentException('Invalid socket.io flag used: ' . $flag);
+        }
+
         $this->flags[$flag] = true;
+
         return $this;
     }
 
     /**
      * Set type
      * 
-     * @param   int $type
+     * @param  int $type
      * @return $this
      */
     public function type($type = Type::REGULAR_EVENT)
     {
         $this->type = $type;
+
         return $this;
     }
 
