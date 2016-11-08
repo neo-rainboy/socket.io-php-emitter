@@ -2,6 +2,7 @@
     "name": "shakahl/socket.io-php-emitter",
     "license": "MIT",
     "description": "PHP socket.io event emitter",
+    "version": "0.1.0",
     "authors": [
         {
             "name": "Soma Szélpál",
