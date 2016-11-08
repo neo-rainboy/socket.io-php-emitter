@@ -1,22 +1,26 @@
 <?php
+
 /**
+ * @author Soma Szélpál <szelpalsoma@gmail.com>
  * @author Anton Pavlov <anton.pavlov.it@gmail.com>
  * @license MIT
  */
-namespace Exls\SocketIOEmitter;
+namespace Shakahl\SocketIO;
 
-use Exls\SocketIOEmitter\Constants\Emitter\Type;
 use MessagePack\Packer;
 use Predis;
+use Shakahl\SocketIO\Constants\Emitter\Type;
 
 /**
  * Class Emitter
- * @package Exls\SocketIOEmitter
+ * @package Shakahl\SocketIO
  */
 class Emitter
 {
     /**
      * Default namespace
+     *
+     * @var string
      */
     const DEFAULT_NAMESPACE = '/';
 
@@ -29,46 +33,60 @@ class Emitter
      * @var int
      */
     protected $type;
+
     /**
      * @var string
      */
     protected $prefix;
+
     /**
      * Rooms
      * @var array
      */
     protected $rooms;
+
     /**
      * @var array
      */
     protected $flags;
+
     /**
      * @var Packer
      */
     protected $packer;
+
     /**
      * @var Predis\Client
      */
     protected $client;
+
     /**
      * @var string
      */
     protected $namespace;
+
     /**
      * Emitter constructor.
+     * 
      * @param Predis\Client $client
      * @param string $prefix
      */
-    function __construct(Predis\Client $client, $prefix = 'socket.io') {
+    public function __construct(Predis\Client $client, $prefix = 'socket.io')
+    {
         $this->client = $client;
         $this->prefix = $prefix;
         $this->packer = new Packer();
         $this->reset();
     }
-    /*
+
+    /**
      * Set room
+     *
+     * @param  string $room
+     * @return $this
      */
-    public function in($room) {
+    public function in($room)
+    {
         //multiple
         if (is_array($room)) {
             foreach ($room as $r) {
@@ -83,18 +101,25 @@ class Emitter
         return $this;
     }
 
-    // Alias for in
-    public function to($room) {
+    /**
+     * Alias for in
+     * 
+     * @param  string $room
+     * @return $this
+     */
+    public function to($room)
+    {
         return $this->in($room);
     }
 
     /**
      * Set a namespace
      *
-     * @param $namespace
+     * @param  string $namespace
      * @return $this
      */
-    public function of($namespace) {
+    public function of($namespace)
+    {
         $this->namespace = $namespace;
         return $this;
     }
@@ -102,37 +127,43 @@ class Emitter
     /**
      * Set flags
      *
-     * @param $flag
+     * @param  int $flag
      * @return $this
      */
-    public function __get($flag) {
-        $this->flags[$flag] = TRUE;
+    public function __get($flag)
+    {
+        $this->flags[$flag] = true;
         return $this;
     }
 
     /**
      * Set type
-     * @param int $type
+     * 
+     * @param   int $type
      * @return $this
      */
-    public function type($type = Type::REGULAR_EVENT) {
+    public function type($type = Type::REGULAR_EVENT)
+    {
         $this->type = $type;
         return $this;
     }
 
-    /*
+    /**
      * Emitting
+     *
+     * @return $this
      */
-    public function emit() {
+    public function emit()
+    {
         $packet = [
-            'type'  => $this->type,
-            'data'  => func_get_args(),
-            'nsp'   => $this->namespace,
+            'type' => $this->type,
+            'data' => func_get_args(),
+            'nsp'  => $this->namespace,
         ];
 
         $options = [
             'rooms' => $this->rooms,
-            'flags' => $this->flags
+            'flags' => $this->flags,
         ];
         $channelName = sprintf('%s#%s#', $this->prefix, $packet['nsp']);
 
@@ -160,13 +191,14 @@ class Emitter
 
     /**
      * Reset all values
+     * @return $this
      */
     protected function reset()
     {
-        $this->rooms = [];
-        $this->flags = [];
+        $this->rooms     = [];
+        $this->flags     = [];
         $this->namespace = self::DEFAULT_NAMESPACE;
-        $this->type = Type::REGULAR_EVENT;
+        $this->type      = Type::REGULAR_EVENT;
         return $this;
     }
 }

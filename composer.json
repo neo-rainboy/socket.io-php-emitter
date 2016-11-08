@@ -1,8 +1,12 @@
 {
-    "name": "exls/socket.io-emitter",
+    "name": "shakahl/socket.io-php-emitter",
     "license": "MIT",
-    "description": "PHP socket.io emitter",
+    "description": "PHP socket.io event emitter",
     "authors": [
+        {
+            "name": "Soma Szélpál",
+            "email": "szelpalsoma@gmail.com"
+        },
         {
             "name": "Anton Pavlov",
             "email": "anton.pavlov.it@gmail.com"
@@ -15,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Exls\\SocketIOEmitter\\": "src/"
+            "Shakahl\\SocketIO\\": "src/"
         }
     }
 }

@@ -1,18 +1,18 @@
-exls/socket.io-emitter
+shakahl/socket.io-php-emitter
 =====================
 
 A PHP implementation of socket.io-emitter (0.1.0).
 
 ## Installation
 
-composer require exls/socket.io-emitter
+composer require shakahl/socket.io-emitter
 
 ## Usage
 
 ### Emit payload message
 ```php
 use Predis;
-use Exls\SocketIO;
+use Shakahl\SocketIO;
 ...
 
 $client = new Predis\Client();
@@ -30,7 +30,7 @@ Possible flags
 #### To use flags, just call it like in example bellow
 ```php
 use Predis;
-use Exls\SocketIO;
+use Shakahl\SocketIO;
 ...
 
 $client = new Predis\Client();
@@ -42,7 +42,7 @@ $client = new Predis\Client();
 ### Emit an object
 ```php
 use Predis;
-use Exls\SocketIO;
+use Shakahl\SocketIO;
 ...
 
 $client = new Predis\Client();
@@ -50,3 +50,8 @@ $client = new Predis\Client();
 (new Emitter($client))
     ->emit('broadcast-event', ['param1' => 'value1', 'param2' => 'value2', ]);
 ```
+
+## Credits
+
+This library is forked from [exls/socket.io-emitter](https://github.com/exls/socket.io-emitter) created by Anton Pavlov.
+
