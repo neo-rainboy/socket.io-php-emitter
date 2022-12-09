@@ -1,8 +1,8 @@
 {
-    "name": "shakahl/socket.io-php-emitter",
+    "name": "neo-rainboy/socket.io-php-emitter",
     "license": "MIT",
     "description": "PHP socket.io event emitter",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "authors": [
         {
             "name": "Soma Szélpál",
@@ -11,6 +11,10 @@
         {
             "name": "Anton Pavlov",
             "email": "anton.pavlov.it@gmail.com"
+        },
+        {
+            "name": "Neo Rainboy",
+            "email": "neo.rainboy@gmail.com"
         }
     ],
     "require": {
